@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "sib_energy_craft:bronze_energy_container",
+    "sib_energy_craft:crystal_energy_container"
+  ]
+}

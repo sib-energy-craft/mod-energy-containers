@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "mod-energy-containers",
+  "version": "0.0.1",
+  "authors": [
+    "sibmaks"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.github.sib_energy_craft.energy_container.load.Blocks",
+      "com.github.sib_energy_craft.energy_container.load.Entities",
+      "com.github.sib_energy_craft.energy_container.load.Items"
+    ],
+    "client": [
+      "com.github.sib_energy_craft.energy_container.load.client.Screens"
+    ]
+  }
+}

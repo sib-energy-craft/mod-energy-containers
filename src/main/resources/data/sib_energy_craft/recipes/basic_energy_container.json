@@ -1,0 +1,22 @@
+{
+  "type": "sib_energy_craft:crafting_shaped_charged",
+  "pattern": [
+    "PCP",
+    "BBB",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "tag": "minecraft:planks"
+    },
+    "C": {
+      "item": "sib_energy_craft:tin_cable_isolated"
+    },
+    "B": {
+      "item": "sib_energy_craft:rechargeable_battery"
+    }
+  },
+  "result": {
+    "item": "sib_energy_craft:basic_energy_container"
+  }
+}

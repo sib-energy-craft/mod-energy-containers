@@ -1,0 +1,60 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "sib_energy_craft:bronze_energy_container"
+    ]
+  },
+  "criteria": {
+    "has_copper_cable_isolated": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "sib_energy_craft:copper_cable_isolated"
+            ]
+          }
+        ]
+      }
+    },
+    "has_advanced_rechargeable_battery": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "sib_energy_craft:advanced_rechargeable_battery"
+            ]
+          }
+        ]
+      }
+    },
+    "has_bronze_plate": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "sib_energy_craft:bronze_plate"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "sib_energy_craft:bronze_energy_container"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_copper_cable_isolated",
+      "has_advanced_rechargeable_battery",
+      "has_bronze_plate",
+      "has_the_recipe"
+    ]
+  ]
+}

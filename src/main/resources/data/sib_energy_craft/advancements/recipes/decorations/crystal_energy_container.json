@@ -1,0 +1,60 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "sib_energy_craft:crystal_energy_container"
+    ]
+  },
+  "criteria": {
+    "has_gold_cable_isolated_x2": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "sib_energy_craft:gold_cable_isolated_x2"
+            ]
+          }
+        ]
+      }
+    },
+    "has_energy_crystal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "sib_energy_craft:energy_crystal"
+            ]
+          }
+        ]
+      }
+    },
+    "has_base_machine_body": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "sib_energy_craft:base_machine_body"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "sib_energy_craft:crystal_energy_container"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_gold_cable_isolated_x2",
+      "has_energy_crystal",
+      "has_base_machine_body",
+      "has_the_recipe"
+    ]
+  ]
+}

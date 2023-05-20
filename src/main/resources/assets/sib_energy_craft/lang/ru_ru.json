@@ -1,0 +1,10 @@
+{
+  "block.sib_energy_craft.basic_energy_container": "Базовый накопитель энергии",
+  "container.basic_energy_container": "Базовый накопитель энергии",
+
+  "block.sib_energy_craft.bronze_energy_container": "Бронзовый накопитель энергии",
+  "container.bronze_energy_container": "Бронзовый накопитель энергии",
+
+  "block.sib_energy_craft.crystal_energy_container": "Кристальный накопитель энергии",
+  "container.crystal_energy_container": "Кристальный накопитель энергии"
+}

@@ -1,0 +1,58 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "sib_energy_craft:basic_energy_container"
+    ]
+  },
+  "criteria": {
+    "has_tin_cable_isolated": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "sib_energy_craft:tin_cable_isolated"
+            ]
+          }
+        ]
+      }
+    },
+    "has_rechargeable_battery": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "sib_energy_craft:rechargeable_battery"
+            ]
+          }
+        ]
+      }
+    },
+    "has_planks": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "minecraft:planks"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "sib_energy_craft:basic_energy_container"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_tin_cable_isolated",
+      "has_rechargeable_battery",
+      "has_planks",
+      "has_the_recipe"
+    ]
+  ]
+}

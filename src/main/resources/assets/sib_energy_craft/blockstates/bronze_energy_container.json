@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "x": 180,
+      "model": "sib_energy_craft:block/bronze_energy_container"
+    },
+    "facing=east": {
+      "x": 90,
+      "y": 90,
+      "model": "sib_energy_craft:block/bronze_energy_container"
+    },
+    "facing=north": {
+      "x": 90,
+      "model": "sib_energy_craft:block/bronze_energy_container"
+    },
+    "facing=south": {
+      "x": 90,
+      "y": 180,
+      "model": "sib_energy_craft:block/bronze_energy_container"
+    },
+    "facing=up": {
+      "model": "sib_energy_craft:block/bronze_energy_container"
+    },
+    "facing=west": {
+      "x": 90,
+      "y": 270,
+      "model": "sib_energy_craft:block/bronze_energy_container"
+    }
+  }
+}

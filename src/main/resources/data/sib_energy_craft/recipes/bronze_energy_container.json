@@ -1,0 +1,22 @@
+{
+  "type": "sib_energy_craft:crafting_shaped_charged",
+  "pattern": [
+    "PCP",
+    "BBB",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "sib_energy_craft:bronze_plate"
+    },
+    "C": {
+      "item": "sib_energy_craft:copper_cable_isolated"
+    },
+    "B": {
+      "item": "sib_energy_craft:advanced_rechargeable_battery"
+    }
+  },
+  "result": {
+    "item": "sib_energy_craft:bronze_energy_container"
+  }
+}

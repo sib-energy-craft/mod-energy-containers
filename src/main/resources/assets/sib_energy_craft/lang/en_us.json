@@ -1,0 +1,10 @@
+{
+  "block.sib_energy_craft.basic_energy_container": "Basic Energy Storage",
+  "container.basic_energy_container": "Basic Energy Storage",
+
+  "block.sib_energy_craft.bronze_energy_container": "Bronze Energy Storage",
+  "container.bronze_energy_container": "Bronze Energy Storage",
+
+  "block.sib_energy_craft.crystal_energy_container": "Crystal Energy Storage",
+  "container.crystal_energy_container": "Crystal Energy Storage"
+}

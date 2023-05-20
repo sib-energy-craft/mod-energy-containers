@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "#sib_energy_craft:energy_suppliers",
+    "#sib_energy_craft:energy_consumers"
+  ]
+}

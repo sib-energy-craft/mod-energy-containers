@@ -1,0 +1,22 @@
+{
+  "type": "sib_energy_craft:crafting_shaped_charged",
+  "pattern": [
+    "-C-",
+    "C#C",
+    "-C-"
+  ],
+  "key": {
+    "C": {
+      "item": "sib_energy_craft:energy_crystal"
+    },
+    "-": {
+      "item": "sib_energy_craft:gold_cable_isolated_x2"
+    },
+    "#": {
+      "item": "sib_energy_craft:base_machine_body"
+    }
+  },
+  "result": {
+    "item": "sib_energy_craft:crystal_energy_container"
+  }
+}
