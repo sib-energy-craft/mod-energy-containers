@@ -55,9 +55,9 @@ public abstract class AbstractEnergyContainerBlockEntity extends LockableContain
     protected DefaultedList<ItemStack> inventory = DefaultedList.ofSize(2, ItemStack.EMPTY);
 
     @Getter
-    private final Text containerName;
-    private final AbstractEnergyContainerBlock block;
-    private CleanEnergyContainer energyContainer;
+    protected final Text containerName;
+    protected final AbstractEnergyContainerBlock block;
+    protected CleanEnergyContainer energyContainer;
 
     protected final PropertyMap<EnergyContainerProperties> propertyMap;
     private Direction supplyingDirection;

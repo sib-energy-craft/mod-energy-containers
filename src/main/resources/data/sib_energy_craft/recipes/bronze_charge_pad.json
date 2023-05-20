@@ -1,0 +1,24 @@
+{
+  "type": "sib_energy_craft:crafting_shaped_charged",
+  "pattern": [
+    "CPC",
+    "R#R"
+  ],
+  "key": {
+    "C": {
+      "item": "sib_energy_craft:energy_circuit"
+    },
+    "P": {
+      "item": "minecraft:stone_pressure_plate"
+    },
+    "R": {
+      "item": "sib_energy_craft:vulcanized_rubber"
+    },
+    "#": {
+      "item": "sib_energy_craft:bronze_energy_container"
+    }
+  },
+  "result": {
+    "item": "sib_energy_craft:bronze_charge_pad"
+  }
+}

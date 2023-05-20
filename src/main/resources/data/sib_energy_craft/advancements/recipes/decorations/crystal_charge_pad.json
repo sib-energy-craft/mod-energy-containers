@@ -1,0 +1,73 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "sib_energy_craft:crystal_charge_pad"
+    ]
+  },
+  "criteria": {
+    "has_energy_circuit": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "sib_energy_craft:energy_circuit"
+            ]
+          }
+        ]
+      }
+    },
+    "has_crystal_energy_container": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "sib_energy_craft:crystal_energy_container"
+            ]
+          }
+        ]
+      }
+    },
+    "has_rubber": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "sib_energy_craft:vulcanized_rubber"
+            ]
+          }
+        ]
+      }
+    },
+    "has_stone_pressure_plate": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:stone_pressure_plate"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "sib_energy_craft:crystal_charge_pad"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_energy_circuit",
+      "has_crystal_energy_container",
+      "has_rubber",
+      "has_stone_pressure_plate",
+      "has_the_recipe"
+    ]
+  ]
+}

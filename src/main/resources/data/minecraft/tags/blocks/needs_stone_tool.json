@@ -1,8 +1,9 @@
 {
   "replace": false,
   "values": [
-    "sib_energy_craft:base_machine_body",
     "sib_energy_craft:basic_energy_container",
-    "sib_energy_craft:bronze_energy_container"
+    "sib_energy_craft:basic_charge_pad",
+    "sib_energy_craft:bronze_energy_container",
+    "sib_energy_craft:bronze_charge_pad"
   ]
 }

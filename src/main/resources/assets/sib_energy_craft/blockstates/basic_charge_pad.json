@@ -1,0 +1,56 @@
+{
+  "variants": {
+    "facing=down,charge=false": {
+      "x": 180,
+      "model": "sib_energy_craft:block/basic_charge_pad"
+    },
+    "facing=east,charge=false": {
+      "x": 90,
+      "y": 90,
+      "model": "sib_energy_craft:block/basic_charge_pad"
+    },
+    "facing=north,charge=false": {
+      "x": 90,
+      "model": "sib_energy_craft:block/basic_charge_pad"
+    },
+    "facing=south,charge=false": {
+      "x": 90,
+      "y": 180,
+      "model": "sib_energy_craft:block/basic_charge_pad"
+    },
+    "facing=up,charge=false": {
+      "model": "sib_energy_craft:block/basic_charge_pad"
+    },
+    "facing=west,charge=false": {
+      "x": 90,
+      "y": 270,
+      "model": "sib_energy_craft:block/basic_charge_pad"
+    },
+    "facing=down,charge=true": {
+      "x": 180,
+      "model": "sib_energy_craft:block/basic_charge_pad_on"
+    },
+    "facing=east,charge=true": {
+      "x": 90,
+      "y": 90,
+      "model": "sib_energy_craft:block/basic_charge_pad_on"
+    },
+    "facing=north,charge=true": {
+      "x": 90,
+      "model": "sib_energy_craft:block/basic_charge_pad_on"
+    },
+    "facing=south,charge=true": {
+      "x": 90,
+      "y": 180,
+      "model": "sib_energy_craft:block/basic_charge_pad_on"
+    },
+    "facing=up,charge=true": {
+      "model": "sib_energy_craft:block/basic_charge_pad_on"
+    },
+    "facing=west,charge=true": {
+      "x": 90,
+      "y": 270,
+      "model": "sib_energy_craft:block/basic_charge_pad_on"
+    }
+  }
+}

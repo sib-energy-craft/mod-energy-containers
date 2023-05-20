@@ -1,7 +1,8 @@
 {
   "schemaVersion": 1,
   "id": "mod-energy-containers",
-  "version": "0.0.1",
+  "version": "0.0.2",
+  "description": "Energy containers and charge pads. Store your energy, charge your items, conquer the world.",
   "authors": [
     "sibmaks"
   ],
@@ -12,7 +13,11 @@
     "main": [
       "com.github.sib_energy_craft.energy_container.load.Blocks",
       "com.github.sib_energy_craft.energy_container.load.Entities",
-      "com.github.sib_energy_craft.energy_container.load.Items"
+      "com.github.sib_energy_craft.energy_container.load.Items",
+
+      "com.github.sib_energy_craft.charge_pad.load.Blocks",
+      "com.github.sib_energy_craft.charge_pad.load.Entities",
+      "com.github.sib_energy_craft.charge_pad.load.Items"
     ],
     "client": [
       "com.github.sib_energy_craft.energy_container.load.client.Screens"
