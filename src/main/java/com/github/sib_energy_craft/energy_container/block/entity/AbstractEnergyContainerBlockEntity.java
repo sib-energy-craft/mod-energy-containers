@@ -7,14 +7,17 @@ import com.github.sib_energy_craft.energy_api.consumer.EnergyConsumer;
 import com.github.sib_energy_craft.energy_api.supplier.EnergySupplier;
 import com.github.sib_energy_craft.energy_api.tags.CoreTags;
 import com.github.sib_energy_craft.energy_container.block.AbstractEnergyContainerBlock;
+import com.github.sib_energy_craft.energy_container.network.NetworkPackets;
+import com.github.sib_energy_craft.energy_container.network.ScreenHandlerIntPropertyUpdateS2CPacket;
 import com.github.sib_energy_craft.energy_container.screen.EnergyContainerScreenHandler;
-import com.github.sib_energy_craft.sec_utils.screen.PropertyMap;
 import com.github.sib_energy_craft.sec_utils.utils.BlockEntityUtils;
 import lombok.Getter;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.block.entity.LockableContainerBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
@@ -42,7 +45,7 @@ import java.util.Set;
  * @since 0.0.1
  * @author sibmaks
  */
-public abstract class AbstractEnergyContainerBlockEntity extends LockableContainerBlockEntity
+public abstract class AbstractEnergyContainerBlockEntity extends BlockEntity
         implements SidedInventory, ExtendedScreenHandlerFactory, EnergyConsumer, EnergySupplier {
 
     public static final int CHARGE_SLOT = 0;
@@ -59,7 +62,6 @@ public abstract class AbstractEnergyContainerBlockEntity extends LockableContain
     protected final AbstractEnergyContainerBlock block;
     protected CleanEnergyContainer energyContainer;
 
-    protected final PropertyMap<EnergyContainerProperties> propertyMap;
     private Direction supplyingDirection;
 
     protected AbstractEnergyContainerBlockEntity(@NotNull BlockEntityType<?> blockEntityType,
@@ -71,10 +73,6 @@ public abstract class AbstractEnergyContainerBlockEntity extends LockableContain
         this.containerName = Text.translatable(containerNameCode);
         this.energyContainer = new CleanEnergyContainer(Energy.ZERO, block.getMaxCharge());
         this.block = block;
-        this.propertyMap = new PropertyMap<>(EnergyContainerProperties.class);
-        this.propertyMap.add(EnergyContainerProperties.CHARGE, () -> energyContainer.getCharge().intValue());
-        this.propertyMap.add(EnergyContainerProperties.MAX_CHARGE, () -> energyContainer.getMaxCharge().intValue());
-        this.propertyMap.add(EnergyContainerProperties.ENERGY_PACKET_SIZE, () -> block.getEnergyLevel().to);
     }
 
     @Override
@@ -256,16 +254,36 @@ public abstract class AbstractEnergyContainerBlockEntity extends LockableContain
         return energyContainer.getCharge().intValue();
     }
 
+    @Nullable
     @Override
-    protected ScreenHandler createScreenHandler(int syncId,
-                                                @NotNull PlayerInventory playerInventory) {
-        return new EnergyContainerScreenHandler(syncId, playerInventory, this, this.propertyMap);
+    public ScreenHandler createMenu(int syncId,
+                                    @NotNull PlayerInventory playerInventory,
+                                    @NotNull PlayerEntity player) {
+        var screenHandler = new EnergyContainerScreenHandler(syncId, playerInventory, this, getCharge(), block);
+        var world = player.world;
+        if(!world.isClient && player instanceof ServerPlayerEntity serverPlayerEntity) {
+            screenHandler.setSyncer(() -> {
+                var packet = new ScreenHandlerIntPropertyUpdateS2CPacket(syncId, EnergyContainerProperties.CHARGE.ordinal(),
+                        getCharge());
+                var packetByteBuf = PacketByteBufs.create();
+                packet.write(packetByteBuf);
+                ServerPlayNetworking.send(serverPlayerEntity, NetworkPackets.UPDATE_INT_PROPERTY, packetByteBuf);
+            });
+        }
+        return screenHandler;
+    }
+
+    @Override
+    public Text getDisplayName() {
+        return containerName;
     }
 
     @Override
     public void writeScreenOpeningData(@NotNull ServerPlayerEntity player,
                                        @NotNull PacketByteBuf buf) {
-        buf.writeBlockPos(pos);
+        buf.writeInt(getCharge());
+        buf.writeInt(block.getMaxCharge());
+        buf.writeInt(block.getEnergyLevel().to);
     }
 }
 
