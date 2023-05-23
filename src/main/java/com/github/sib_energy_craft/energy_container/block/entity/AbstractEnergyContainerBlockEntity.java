@@ -7,14 +7,16 @@ import com.github.sib_energy_craft.energy_api.consumer.EnergyConsumer;
 import com.github.sib_energy_craft.energy_api.supplier.EnergySupplier;
 import com.github.sib_energy_craft.energy_api.tags.CoreTags;
 import com.github.sib_energy_craft.energy_container.block.AbstractEnergyContainerBlock;
+import com.github.sib_energy_craft.screen.property.ScreenPropertyTypes;
 import com.github.sib_energy_craft.energy_container.screen.EnergyContainerScreenHandler;
-import com.github.sib_energy_craft.sec_utils.screen.PropertyMap;
+import com.github.sib_energy_craft.network.PropertyUpdateSyncer;
+import com.github.sib_energy_craft.screen.property.TypedScreenProperty;
 import com.github.sib_energy_craft.sec_utils.utils.BlockEntityUtils;
 import lombok.Getter;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.block.entity.LockableContainerBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
@@ -36,13 +38,14 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Set;
 
 /**
  * @since 0.0.1
  * @author sibmaks
  */
-public abstract class AbstractEnergyContainerBlockEntity extends LockableContainerBlockEntity
+public abstract class AbstractEnergyContainerBlockEntity extends BlockEntity
         implements SidedInventory, ExtendedScreenHandlerFactory, EnergyConsumer, EnergySupplier {
 
     public static final int CHARGE_SLOT = 0;
@@ -57,9 +60,9 @@ public abstract class AbstractEnergyContainerBlockEntity extends LockableContain
     @Getter
     protected final Text containerName;
     protected final AbstractEnergyContainerBlock block;
+    protected final List<TypedScreenProperty<?>> typedScreenProperties;
     protected CleanEnergyContainer energyContainer;
 
-    protected final PropertyMap<EnergyContainerProperties> propertyMap;
     private Direction supplyingDirection;
 
     protected AbstractEnergyContainerBlockEntity(@NotNull BlockEntityType<?> blockEntityType,
@@ -71,10 +74,13 @@ public abstract class AbstractEnergyContainerBlockEntity extends LockableContain
         this.containerName = Text.translatable(containerNameCode);
         this.energyContainer = new CleanEnergyContainer(Energy.ZERO, block.getMaxCharge());
         this.block = block;
-        this.propertyMap = new PropertyMap<>(EnergyContainerProperties.class);
-        this.propertyMap.add(EnergyContainerProperties.CHARGE, () -> energyContainer.getCharge().intValue());
-        this.propertyMap.add(EnergyContainerProperties.MAX_CHARGE, () -> energyContainer.getMaxCharge().intValue());
-        this.propertyMap.add(EnergyContainerProperties.ENERGY_PACKET_SIZE, () -> block.getEnergyLevel().to);
+        this.typedScreenProperties = List.of(
+                new TypedScreenProperty<>(
+                        EnergyContainerProperties.CHARGE.ordinal(),
+                        ScreenPropertyTypes.INT,
+                        this::getCharge
+                )
+        );
     }
 
     @Override
@@ -256,16 +262,31 @@ public abstract class AbstractEnergyContainerBlockEntity extends LockableContain
         return energyContainer.getCharge().intValue();
     }
 
+    @Nullable
     @Override
-    protected ScreenHandler createScreenHandler(int syncId,
-                                                @NotNull PlayerInventory playerInventory) {
-        return new EnergyContainerScreenHandler(syncId, playerInventory, this, this.propertyMap);
+    public ScreenHandler createMenu(int syncId,
+                                    @NotNull PlayerInventory playerInventory,
+                                    @NotNull PlayerEntity player) {
+        var screenHandler = new EnergyContainerScreenHandler(syncId, playerInventory, this, getCharge(), block);
+        var world = player.world;
+        if(!world.isClient && player instanceof ServerPlayerEntity serverPlayerEntity) {
+            var syncer = new PropertyUpdateSyncer(syncId, serverPlayerEntity, typedScreenProperties);
+            screenHandler.setSyncer(syncer);
+        }
+        return screenHandler;
+    }
+
+    @Override
+    public Text getDisplayName() {
+        return containerName;
     }
 
     @Override
     public void writeScreenOpeningData(@NotNull ServerPlayerEntity player,
                                        @NotNull PacketByteBuf buf) {
-        buf.writeBlockPos(pos);
+        buf.writeInt(getCharge());
+        buf.writeInt(block.getMaxCharge());
+        buf.writeInt(block.getEnergyLevel().to);
     }
 }
 

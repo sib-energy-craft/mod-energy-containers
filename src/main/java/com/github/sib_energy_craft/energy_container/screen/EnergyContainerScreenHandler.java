@@ -1,10 +1,10 @@
 package com.github.sib_energy_craft.energy_container.screen;
 
-import com.github.sib_energy_craft.energy_container.load.client.Screens;
+import com.github.sib_energy_craft.energy_container.block.AbstractEnergyContainerBlock;
+import com.github.sib_energy_craft.energy_container.load.ScreenHandlers;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.screen.PropertyDelegate;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -16,14 +16,16 @@ public class EnergyContainerScreenHandler extends AbstractEnergyContainerScreenH
     public EnergyContainerScreenHandler(int syncId,
                                         @NotNull PlayerInventory playerInventory,
                                         @NotNull Inventory inventory,
-                                        @NotNull PropertyDelegate propertyDelegate) {
-        super(Screens.ENERGY_CONTAINER, syncId, playerInventory, inventory, propertyDelegate);
+                                        int charge,
+                                        @NotNull AbstractEnergyContainerBlock block) {
+        super(ScreenHandlers.ENERGY_CONTAINER, syncId, playerInventory, inventory, charge,
+                block.getMaxCharge(), block.getMaxCharge());
     }
 
     public EnergyContainerScreenHandler(int syncId,
                                         @NotNull PlayerInventory playerInventory,
                                         @NotNull PacketByteBuf packetByteBuf) {
-        super(Screens.ENERGY_CONTAINER, syncId, playerInventory);
-
+        super(ScreenHandlers.ENERGY_CONTAINER, syncId, playerInventory, packetByteBuf.readInt(),
+                packetByteBuf.readInt(), packetByteBuf.readInt());
     }
 }

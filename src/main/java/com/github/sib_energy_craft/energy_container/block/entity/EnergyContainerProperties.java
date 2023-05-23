@@ -5,7 +5,5 @@ package com.github.sib_energy_craft.energy_container.block.entity;
  * @author sibmaks
  */
 public enum EnergyContainerProperties {
-    CHARGE,
-    MAX_CHARGE,
-    ENERGY_PACKET_SIZE
+    CHARGE
 }

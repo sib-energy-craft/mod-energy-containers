@@ -43,7 +43,7 @@ public class EnergyContainerScreen extends HandledScreen<EnergyContainerScreenHa
             var charging = Text.translatable("energy.range.text", charge, maxCharge);
             this.renderTooltip(matrices, charging, mouseX, mouseY);
         }
-        var output = Text.translatable("energy.out.text", this.handler.getEnergyPacketSize());
+        var output = Text.translatable("energy.out.text", this.handler.getPacketSize());
         this.textRenderer.draw(matrices, output, i + 81, j + 58, Color.GRAY.getRGB());
     }
 

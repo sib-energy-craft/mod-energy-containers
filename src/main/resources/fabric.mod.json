@@ -14,6 +14,7 @@
       "com.github.sib_energy_craft.energy_container.load.Blocks",
       "com.github.sib_energy_craft.energy_container.load.Entities",
       "com.github.sib_energy_craft.energy_container.load.Items",
+      "com.github.sib_energy_craft.energy_container.load.ScreenHandlers",
 
       "com.github.sib_energy_craft.charge_pad.load.Blocks",
       "com.github.sib_energy_craft.charge_pad.load.Entities",

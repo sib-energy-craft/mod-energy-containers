@@ -81,9 +81,6 @@ public abstract class AbstractEnergyContainerBlock extends BlockWithEntity {
         if(!(blockEntity instanceof AbstractEnergyContainerBlockEntity energyContainerBlock)) {
             return;
         }
-        if (itemStack.hasCustomName()) {
-            energyContainerBlock.setCustomName(itemStack.getName());
-        }
         var item = itemStack.getItem();
         if(item instanceof ChargeableItem chargeableItem) {
             energyContainerBlock.onPlaced(chargeableItem.getCharge(itemStack));
@@ -171,9 +168,6 @@ public abstract class AbstractEnergyContainerBlock extends BlockWithEntity {
             dropStack(world, pos, stackx);
             if (!(blockEntity instanceof AbstractEnergyContainerBlockEntity energyContainerBlock)) {
                 return;
-            }
-            if (energyContainerBlock.hasCustomName()) {
-                stackx.setCustomName(energyContainerBlock.getCustomName());
             }
             var item = stackx.getItem();
             var charge = energyContainerBlock.getCharge();
