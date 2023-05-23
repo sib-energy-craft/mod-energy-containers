@@ -3,7 +3,7 @@ package com.github.sib_energy_craft.energy_container.screen;
 import com.github.sib_energy_craft.energy_api.screen.ChargeSlot;
 import com.github.sib_energy_craft.energy_api.tags.CoreTags;
 import com.github.sib_energy_craft.energy_container.block.entity.EnergyContainerProperties;
-import com.github.sib_energy_craft.energy_container.network.IntPropertyListener;
+import com.github.sib_energy_craft.screen.TypedPropertyScreenHandler;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,7 +23,7 @@ import static com.github.sib_energy_craft.energy_container.block.entity.Abstract
  * @since 0.0.1
  * @author sibmaks
  */
-public abstract class AbstractEnergyContainerScreenHandler extends ScreenHandler implements IntPropertyListener {
+public abstract class AbstractEnergyContainerScreenHandler extends ScreenHandler implements TypedPropertyScreenHandler {
     private final Inventory inventory;
     @Getter
     protected int charge;
@@ -126,16 +126,15 @@ public abstract class AbstractEnergyContainerScreenHandler extends ScreenHandler
     }
 
     @Override
-    public void setIntProperty(int index, int value) {
+    public <V> void onTypedPropertyChanged(int index, V value) {
         if(index == EnergyContainerProperties.CHARGE.ordinal()) {
-            charge = value;
+            charge = (int) value;
         }
     }
 
     @Override
     public void sendContentUpdates() {
         super.sendContentUpdates();
-        System.err.println("sendContentUpdates");
         var syncer = this.syncer;
         if(syncer != null) {
             syncer.run();

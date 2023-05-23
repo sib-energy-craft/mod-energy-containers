@@ -7,13 +7,12 @@ import com.github.sib_energy_craft.energy_api.consumer.EnergyConsumer;
 import com.github.sib_energy_craft.energy_api.supplier.EnergySupplier;
 import com.github.sib_energy_craft.energy_api.tags.CoreTags;
 import com.github.sib_energy_craft.energy_container.block.AbstractEnergyContainerBlock;
-import com.github.sib_energy_craft.energy_container.network.NetworkPackets;
-import com.github.sib_energy_craft.energy_container.network.ScreenHandlerIntPropertyUpdateS2CPacket;
+import com.github.sib_energy_craft.screen.property.ScreenPropertyTypes;
 import com.github.sib_energy_craft.energy_container.screen.EnergyContainerScreenHandler;
+import com.github.sib_energy_craft.network.PropertyUpdateSyncer;
+import com.github.sib_energy_craft.screen.property.TypedScreenProperty;
 import com.github.sib_energy_craft.sec_utils.utils.BlockEntityUtils;
 import lombok.Getter;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -39,6 +38,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -60,6 +60,7 @@ public abstract class AbstractEnergyContainerBlockEntity extends BlockEntity
     @Getter
     protected final Text containerName;
     protected final AbstractEnergyContainerBlock block;
+    protected final List<TypedScreenProperty<?>> typedScreenProperties;
     protected CleanEnergyContainer energyContainer;
 
     private Direction supplyingDirection;
@@ -73,6 +74,13 @@ public abstract class AbstractEnergyContainerBlockEntity extends BlockEntity
         this.containerName = Text.translatable(containerNameCode);
         this.energyContainer = new CleanEnergyContainer(Energy.ZERO, block.getMaxCharge());
         this.block = block;
+        this.typedScreenProperties = List.of(
+                new TypedScreenProperty<>(
+                        EnergyContainerProperties.CHARGE.ordinal(),
+                        ScreenPropertyTypes.INT,
+                        this::getCharge
+                )
+        );
     }
 
     @Override
@@ -262,13 +270,8 @@ public abstract class AbstractEnergyContainerBlockEntity extends BlockEntity
         var screenHandler = new EnergyContainerScreenHandler(syncId, playerInventory, this, getCharge(), block);
         var world = player.world;
         if(!world.isClient && player instanceof ServerPlayerEntity serverPlayerEntity) {
-            screenHandler.setSyncer(() -> {
-                var packet = new ScreenHandlerIntPropertyUpdateS2CPacket(syncId, EnergyContainerProperties.CHARGE.ordinal(),
-                        getCharge());
-                var packetByteBuf = PacketByteBufs.create();
-                packet.write(packetByteBuf);
-                ServerPlayNetworking.send(serverPlayerEntity, NetworkPackets.UPDATE_INT_PROPERTY, packetByteBuf);
-            });
+            var syncer = new PropertyUpdateSyncer(syncId, serverPlayerEntity, typedScreenProperties);
+            screenHandler.setSyncer(syncer);
         }
         return screenHandler;
     }

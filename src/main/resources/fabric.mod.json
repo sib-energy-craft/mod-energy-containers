@@ -21,7 +21,6 @@
       "com.github.sib_energy_craft.charge_pad.load.Items"
     ],
     "client": [
-      "com.github.sib_energy_craft.energy_container.load.client.Network",
       "com.github.sib_energy_craft.energy_container.load.client.Screens"
     ]
   }
