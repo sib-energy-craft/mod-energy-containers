@@ -180,7 +180,7 @@ public abstract class AbstractEnergyContainerBlockEntity extends BlockEntity
     public void setStack(int slot,
                          @NotNull ItemStack stack) {
         var itemStack = this.inventory.get(slot);
-        var bl = !stack.isEmpty() && stack.isItemEqual(itemStack) && ItemStack.areNbtEqual(stack, itemStack);
+        var bl = !stack.isEmpty() && ItemStack.canCombine(stack, itemStack);
         this.inventory.set(slot, stack);
         if (stack.getCount() > this.getMaxCountPerStack()) {
             stack.setCount(this.getMaxCountPerStack());
@@ -268,7 +268,7 @@ public abstract class AbstractEnergyContainerBlockEntity extends BlockEntity
                                     @NotNull PlayerInventory playerInventory,
                                     @NotNull PlayerEntity player) {
         var screenHandler = new EnergyContainerScreenHandler(syncId, playerInventory, this, getCharge(), block);
-        var world = player.world;
+        var world = player.getWorld();
         if(!world.isClient && player instanceof ServerPlayerEntity serverPlayerEntity) {
             var syncer = new PropertyUpdateSyncer(syncId, serverPlayerEntity, typedScreenProperties);
             screenHandler.setSyncer(syncer);
