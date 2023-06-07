@@ -65,6 +65,9 @@ public abstract class AbstractChargePadBlock extends AbstractEnergyContainerBloc
 
         var charged = false;
         for (var itemStack : itemsToCharge) {
+            if(itemStack.getCount() != 1) {
+                continue;
+            }
             charged |= chargepadBlockEntity.charge(itemStack);
         }
         if(charged) {

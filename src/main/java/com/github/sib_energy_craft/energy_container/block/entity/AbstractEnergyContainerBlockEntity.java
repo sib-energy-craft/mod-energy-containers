@@ -102,7 +102,7 @@ public abstract class AbstractEnergyContainerBlockEntity extends BlockEntity
                             @NotNull BlockPos pos,
                             @NotNull BlockState state,
                             @NotNull AbstractEnergyContainerBlockEntity blockEntity) {
-        if(world.isClient) {
+        if(world.isClient || !(world instanceof ServerWorld serverWorld)) {
             return;
         }
 
@@ -119,7 +119,7 @@ public abstract class AbstractEnergyContainerBlockEntity extends BlockEntity
             var chargingStack = blockEntity.inventory.get(CHARGE_SLOT);
             blockEntity.energyContainer.charge(chargingStack, packetSize);
             if(blockEntity.energyContainer.hasEnergy()) {
-                blockEntity.tick(blockEntity);
+                blockEntity.tick(serverWorld, blockEntity);
             }
         }
 
@@ -219,6 +219,9 @@ public abstract class AbstractEnergyContainerBlockEntity extends BlockEntity
 
     @Override
     public void receiveOffer(@NotNull EnergyOffer energyOffer) {
+        if(this == energyOffer.getSource()) {
+            return;
+        }
         var energyLevel = block.getEnergyLevel();
         if(energyOffer.getEnergyAmount().compareTo(energyLevel.toBig) > 0) {
             if(energyOffer.acceptOffer()) {
