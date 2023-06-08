@@ -291,5 +291,10 @@ public abstract class AbstractEnergyContainerBlockEntity extends BlockEntity
         buf.writeInt(block.getMaxCharge());
         buf.writeInt(block.getEnergyLevel().to);
     }
+
+    @Override
+    public boolean isSupplierDead() {
+        return isRemoved();
+    }
 }
 
